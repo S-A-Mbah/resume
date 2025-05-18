@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion"
 import { useTheme } from "../context/ThemeContext"
 import Image from "next/image"
-import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Modal from "./Modal"
@@ -16,7 +15,6 @@ export default function Projects() {
   const [isLoading, setIsLoading] = useState(false)
   const [loadingProject, setLoadingProject] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [activeProject, setActiveProject] = useState<string | null>(null)
 
   // Prefetch the weather app route
   useEffect(() => {
@@ -92,7 +90,6 @@ export default function Projects() {
   }
 
   const openProjectModal = (modalId: string) => {
-    setActiveProject(modalId)
     setIsModalOpen(true)
   }
 
