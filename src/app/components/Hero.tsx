@@ -469,7 +469,8 @@ const Hero = ({ scrollTo }: HeroProps) => {
           const techElements = item.querySelectorAll('.text-xs');
           if (techElements && techElements.length > 0) {
             for (const tech of techElements) {
-              if (tech.textContent) {
+              // Skip elements that contain image attribution text
+              if (tech.textContent && !tech.textContent.includes('Icon by')) {
                 technologies.push(tech.textContent.trim());
               }
             }
