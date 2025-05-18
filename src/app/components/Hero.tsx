@@ -1001,20 +1001,36 @@ const Hero = ({ scrollTo }: HeroProps) => {
           </motion.button>
 
           {/* Carousel Items - Responsive container */}
-          <div className={`relative flex items-center justify-center ${isMobile ? 'mx-1 w-auto' : 'min-w-[600px]'}`}>
+          <div className={`relative flex items-center justify-center overflow-hidden ${
+            // Use a fixed width container in both mobile and desktop to prevent movement
+            isMobile ? 'w-[180px]' : 'min-w-[600px]'
+          }`}>
             <AnimatePresence mode="sync">
               {getVisibleItems().map((navItem, index) => (
                 <motion.button
-                  key={`${navItem.name}-${index}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
+                  key={`${navItem.name}-${currentIndex}`} // Use currentIndex in key to improve transition
+                  initial={{ 
+                    opacity: 0, 
+                    x: isMobile ? 50 : -20 // Different initial position for mobile
+                  }}
+                  animate={{ 
+                    opacity: 1, 
+                    x: 0,
+                    position: isMobile ? 'static' : 'absolute',
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    x: isMobile ? -50 : 20, // Different exit position for mobile
+                    position: isMobile ? 'absolute' : 'absolute',
+                  }}
                   transition={{ 
-                    duration: 0.3,
+                    duration: 0.4,
                     ease: "easeInOut"
                   }}
                   onClick={() => scrollTo(navItem.section)}
-                  className={`${isMobile ? 'relative' : 'absolute'} inline-flex items-center px-6 py-2 text-base font-medium rounded-full 
+                  className={`${
+                    isMobile ? 'mx-auto' : 'absolute'
+                  } inline-flex items-center px-6 py-2 text-base font-medium rounded-full 
                     border transition-colors duration-300 ${
                       theme === 'dark'
                         ? 'text-[#64ffda] border-[#64ffda] hover:bg-[#64ffda]/10'
@@ -1024,8 +1040,14 @@ const Hero = ({ scrollTo }: HeroProps) => {
                   whileTap={{ scale: 0.95 }}
                   style={
                     isMobile 
-                      ? {} // No absolute positioning on mobile
-                      : {  // Keep the existing absolute positioning for desktop
+                      ? { 
+                          // Center the button in mobile view
+                          position: 'relative',
+                          left: '50%',
+                          transform: 'translateX(-50%)'
+                        } 
+                      : {  
+                          // Keep the existing absolute positioning for desktop
                           left: `${index * 33.33}%`,
                           transform: `translateX(-50%)`
                         }
