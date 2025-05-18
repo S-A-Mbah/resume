@@ -8,11 +8,7 @@ import './Calculator.css';
 export default function Calculator() {
   const { theme, toggleTheme } = useTheme();
   const [display, setDisplay] = useState("");
-  const [expression, setExpression] = useState("");
-  const [lastOperator, setLastOperator] = useState("");
-  const [isErrorOrInfinity, setIsErrorOrInfinity] = useState(false);
   const [results, setResults] = useState<string[]>([]);
-  const [userLastAction, setUserLastAction] = useState(0);
   const [mode, setMode] = useState(0); // 0 for calculator, 1 for history
   const [fullExpression, setFullExpression] = useState("");
   const [waitingForOperand, setWaitingForOperand] = useState(true);
@@ -21,9 +17,8 @@ export default function Calculator() {
     display === "Error" ||
     display === "Infinity" ||
     isNaN(Number(display)) ||
-    expression.slice(0, -1) === "Error" ||
-    expression.slice(0, -1) === "Infinity" ||
-    isNaN(Number(expression.slice(0, -1)));
+    fullExpression.endsWith("Error") ||
+    fullExpression.endsWith("Infinity");
 
   const toggleMode = () => {
     setMode(mode === 0 ? 1 : 0);
@@ -43,40 +38,7 @@ export default function Calculator() {
     setMode(0);
   };
 
-  // Handle input of digits and building the display
-  const appendToDisplay = (value: string) => {
-    if (waitingForOperand) {
-      // Start a new number
-      setDisplay(value);
-      setWaitingForOperand(false);
-    } else {
-      // Continue building the current number
-      setDisplay(prev => prev + value);
-    }
-  };
-
-  // Handle input of operators and building the full expression
-  const appendToExpression = (value: string) => {
-    if (/[+\-*/]/.test(value)) {
-      // If display is not empty, append it to the full expression along with the operator
-      if (display !== "") {
-        setFullExpression(prev => prev + display + value);
-        setDisplay(""); // Clear the display after adding to expression
-        setWaitingForOperand(true);
-      } else if (fullExpression !== "" && /[+\-*/]$/.test(fullExpression)) {
-        // Replace the last operator if there's one already
-        setFullExpression(prev => prev.slice(0, -1) + value);
-      }
-    }
-  };
-
-  const clearDisplay = () => {
-    setDisplay("");
-    setFullExpression("");
-    setWaitingForOperand(true);
-  };
-
-  const calculateResult = () => {
+  const calculateResult = useCallback(() => {
     try {
       // Complete the expression with the current display value
       const completeExpression = fullExpression + display;
@@ -96,17 +58,49 @@ export default function Calculator() {
       setDisplay(String(result));
       setFullExpression("");
       setWaitingForOperand(true);
-    } catch (error) {
+    } catch {
       setDisplay("Error");
       setFullExpression("");
-      setIsErrorOrInfinity(true);
       setWaitingForOperand(true);
     }
-  };
+  }, [display, fullExpression]);
 
-  const deleteLastCharacter = () => {
+  // Define appendToDisplay and appendToExpression as memoized callbacks
+  const appendToDisplay = useCallback((value: string) => {
+    if (waitingForOperand) {
+      // Start a new number
+      setDisplay(value);
+      setWaitingForOperand(false);
+    } else {
+      // Continue building the current number
+      setDisplay(prev => prev + value);
+    }
+  }, [waitingForOperand]);
+
+  // Handle input of operators and building the full expression
+  const appendToExpression = useCallback((value: string) => {
+    if (/[+\-*/]/.test(value)) {
+      // If display is not empty, append it to the full expression along with the operator
+      if (display !== "") {
+        setFullExpression(prev => prev + display + value);
+        setDisplay(""); // Clear the display after adding to expression
+        setWaitingForOperand(true);
+      } else if (fullExpression !== "" && /[+\-*/]$/.test(fullExpression)) {
+        // Replace the last operator if there's one already
+        setFullExpression(prev => prev.slice(0, -1) + value);
+      }
+    }
+  }, [display, fullExpression]);
+
+  const clearDisplay = useCallback(() => {
+    setDisplay("");
+    setFullExpression("");
+    setWaitingForOperand(true);
+  }, []);
+
+  const deleteLastCharacter = useCallback(() => {
     setDisplay(prev => prev.slice(0, -1));
-  };
+  }, []);
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (isDisabled) {
@@ -129,7 +123,7 @@ export default function Calculator() {
       event.preventDefault();
       deleteLastCharacter();
     }
-  }, [display, fullExpression, isDisabled]);
+  }, [isDisabled, appendToDisplay, appendToExpression, calculateResult, clearDisplay, deleteLastCharacter]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);

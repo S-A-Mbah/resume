@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useEffect } from "react"
-import { motion } from "framer-motion"
 import Hero from "./components/Hero"
 import Skills from "./components/Skills"
 import Education from "./components/Education"

@@ -1,17 +1,9 @@
 'use client';
 
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useTheme } from '../../../context/ThemeContext';
 
 const Navbar = () => {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <nav className="border-b border-white/10 dark:bg-slate-900 bg-white">
@@ -23,14 +15,14 @@ const Navbar = () => {
             </h1>
           </div>
           <button
-            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            onClick={toggleTheme}
             className="p-2 rounded-lg dark:bg-white/10 bg-slate-100 
                      dark:text-white text-slate-900 
                      dark:hover:bg-white/20 hover:bg-slate-200
                      transition-colors duration-200"
             aria-label="Toggle theme"
           >
-            {resolvedTheme === 'dark' ? '☀️' : '🌙'}
+            {theme === 'dark' ? '☀️' : '🌙'}
           </button>
         </div>
       </div>

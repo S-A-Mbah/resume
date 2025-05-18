@@ -598,7 +598,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
         setIsDownloading(false);
       }, 500);
       
-    } catch (error) {
+    } catch {
       alert('There was a problem generating your resume. Please try again.');
       clearTimeout(resetTimeout);
       setIsDownloading(false);

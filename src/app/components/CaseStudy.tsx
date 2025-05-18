@@ -2,40 +2,24 @@
 
 import { useTheme } from '../context/ThemeContext'
 
-// Define React namespace for JSX types
-namespace React {
-  export interface DetailedHTMLProps<P, T> extends HTMLAttributes<T> {
-    [key: string]: any;
-  }
-  export interface HTMLAttributes<T> {
-    [key: string]: any;
-  }
-  export interface LiHTMLAttributes<T> extends HTMLAttributes<T> {
-    [key: string]: any;
-  }
-  export interface AnchorHTMLAttributes<T> extends HTMLAttributes<T> {
-    [key: string]: any;
-  }
-  export interface SVGProps<T> {
-    [key: string]: any;
-  }
+// Define a simple interface for HTML element props
+interface BasicProps {
+  [key: string]: unknown;
 }
 
-// Add JSX namespace to fix "JSX element implicitly has type 'any'" errors
+// Add types for global JSX elements
 declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      div: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-      h3: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>
-      h4: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>
-      p: React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>
-      span: React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>
-      ul: React.DetailedHTMLProps<React.HTMLAttributes<HTMLUListElement>, HTMLUListElement>
-      li: React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement>
-      a: React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
-      svg: React.SVGProps<SVGSVGElement>
-      path: React.SVGProps<SVGPathElement>
-    }
+  interface IntrinsicElements {
+    div: BasicProps;
+    h3: BasicProps;
+    h4: BasicProps;
+    p: BasicProps;
+    span: BasicProps;
+    ul: BasicProps;
+    li: BasicProps;
+    a: BasicProps;
+    svg: BasicProps;
+    path: BasicProps;
   }
 }
 

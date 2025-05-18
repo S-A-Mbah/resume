@@ -8,6 +8,18 @@ import { useRouter } from "next/navigation"
 import Modal from "./Modal"
 import CaseStudy from "./CaseStudy"
 
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  imageAttribution?: string;
+  technologies: string[];
+  githubLink: string;
+  liveLink?: string;
+  isInternal?: boolean;
+  isModal?: boolean;
+}
+
 export default function Projects() {
   const router = useRouter()
   const { theme } = useTheme()
@@ -18,20 +30,19 @@ export default function Projects() {
 
   // Prefetch the weather app route
   useEffect(() => {
-    // @ts-ignore - prefetch exists but TypeScript doesn't recognize it
-    if (router.prefetch) {
-      // @ts-ignore
-      router.prefetch('/projects/weather')
-      // @ts-ignore
-      router.prefetch('/projects/calculator')
+    // Check if router.prefetch exists before calling it
+    if (typeof router.prefetch === 'function') {
+      router.prefetch('/projects/weather');
+      router.prefetch('/projects/calculator');
     }
   }, [router])
 
-  const projects = [
+  const projects: Project[] = [
     {
       title: "Weather App",
       description: "Real-time weather forecasting application with location search functionality, displaying current conditions and forecasts.",
-      image: "/weather-preview.jpg",
+      image: "/weather.png",
+      imageAttribution: "Icon by iconixar",
       technologies: ["Next.js", "React", "TailwindCSS", "OpenWeather API"],
       githubLink: "#",
       liveLink: "/projects/weather",
@@ -52,8 +63,7 @@ export default function Projects() {
       image: "/visualization-activity.png",
       technologies: ["Python", "Data Analysis", "Pandas", "Matplotlib"],
       githubLink: "https://www.kaggle.com/code/sambah29/bellabeat-case-study-using-python",
-      isModal: true,
-      modalId: "bellabeat"
+      isModal: true
     },
     // Add more projects as needed
   ]
@@ -89,7 +99,7 @@ export default function Projects() {
     }, 100) // Small delay to allow for the loading state to show
   }
 
-  const openProjectModal = (modalId: string) => {
+  const openProjectModal = () => {
     setIsModalOpen(true)
   }
 
@@ -143,6 +153,13 @@ export default function Projects() {
                     className="rounded-lg object-contain"
                     priority={index < 2}
                   />
+                  {project.imageAttribution && (
+                    <div className={`absolute bottom-1 right-1 text-xs px-1 rounded bg-black/50 ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-200'
+                    }`}>
+                      {project.imageAttribution}
+                    </div>
+                  )}
                 </div>
                 
                 <h3 className={`text-2xl font-semibold ${
@@ -187,7 +204,7 @@ export default function Projects() {
                   </a>
                   {project.isInternal ? (
                     <button
-                      onClick={() => handleProjectNavigation(project.liveLink, project.title)}
+                      onClick={() => project.liveLink && handleProjectNavigation(project.liveLink, project.title)}
                       className={`inline-flex items-center px-4 py-2 rounded-lg border transition-colors ${
                         theme === 'dark'
                           ? 'border-[#64ffda] text-[#64ffda] hover:bg-[#64ffda]/10'
@@ -210,7 +227,7 @@ export default function Projects() {
                     </button>
                   ) : project.isModal ? (
                     <button
-                      onClick={() => openProjectModal(project.modalId)}
+                      onClick={() => openProjectModal()}
                       className={`inline-flex items-center px-4 py-2 rounded-lg border transition-colors ${
                         theme === 'dark'
                           ? 'border-[#64ffda] text-[#64ffda] hover:bg-[#64ffda]/10'
@@ -249,4 +266,3 @@ export default function Projects() {
     </div>
   )
 }
-
