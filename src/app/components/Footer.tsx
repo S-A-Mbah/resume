@@ -6,7 +6,7 @@ import { useUserProfile } from "../context/UserContext"
 import { 
   GithubIcon, 
   LinkedinIcon, 
-  TwitterIcon, 
+  // TwitterIcon, 
   MailIcon 
 } from "lucide-react"
 

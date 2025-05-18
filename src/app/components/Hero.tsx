@@ -462,7 +462,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
           processedProjects.add(title);
           
           const descriptionElement = item.querySelector('p');
-          let description = descriptionElement?.textContent?.trim() || '';
+          const description = descriptionElement?.textContent?.trim() || '';
           
           // Extract technologies
           const technologies: string[] = [];
@@ -638,7 +638,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
     }, 10000)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [navigationItems.length])
 
   // Animation variants for staggered children
   const container = {

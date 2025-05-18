@@ -2,6 +2,7 @@
 
 import { FC, useRef, useCallback } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
+import Image from 'next/image';
 
 interface ForecastData {
   list: Array<{
@@ -23,7 +24,7 @@ interface DailyForecastProps {
   units: 'metric' | 'imperial';
 }
 
-const DailyForecast: FC<DailyForecastProps> = ({ forecast, units }) => {
+const DailyForecast: FC<DailyForecastProps> = ({ forecast }) => {
   const { theme } = useTheme();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -96,11 +97,12 @@ const DailyForecast: FC<DailyForecastProps> = ({ forecast, units }) => {
                   <div className={`absolute inset-0 rounded-full transition-colors duration-200 ${
                     theme === 'dark' ? 'bg-white/20' : 'bg-slate-700/10'
                   }`} />
-                  <img
+                  <Image 
                     src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
-                    alt={item.weather[0].description}
-                    width={24}
-                    height={24}
+                    alt={item.weather[0].description || 'weather icon'}
+                    width={50}
+                    height={50}
+                    unoptimized={true}
                     className="relative z-10 drop-shadow-sm scale-150"
                   />
                 </div>

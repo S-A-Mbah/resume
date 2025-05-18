@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "../context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "Projects | Resume",

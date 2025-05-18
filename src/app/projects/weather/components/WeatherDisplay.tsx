@@ -2,6 +2,7 @@ import { FC } from 'react';
 import CircularGauge from './CircularGauge';
 import WindDisplay from './WindDisplay';
 import { useTheme } from '../../../context/ThemeContext';
+import Image from 'next/image';
 
 interface WeatherDisplayProps {
   weatherData: {
@@ -36,11 +37,6 @@ const WeatherDisplay: FC<WeatherDisplayProps> = ({ weatherData, units, onUnitCha
   const { theme } = useTheme();
   const { main, wind, weather, clouds, visibility, rain } = weatherData;
   
-  const getWindDirection = (deg: number): string => {
-    const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-    return directions[Math.round(deg / 45) % 8];
-  };
-
   const formatVisibility = (visibility: number): string => {
     if (isNaN(visibility)) return 'Not available';
     
@@ -100,7 +96,7 @@ const WeatherDisplay: FC<WeatherDisplayProps> = ({ weatherData, units, onUnitCha
               <div className={`absolute inset-0 ${
                 theme === 'dark' ? 'bg-white/10' : 'bg-slate-700/10'
               } rounded-full transition-colors duration-200`} />
-              <img 
+              <Image 
                 src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
                 alt={weather[0].description}
                 width={48}
@@ -108,6 +104,7 @@ const WeatherDisplay: FC<WeatherDisplayProps> = ({ weatherData, units, onUnitCha
                 className={`absolute inset-0 ${
                   theme === 'dark' ? 'bg-white/20' : 'bg-slate-700/10'
                 } rounded-full transition-colors duration-200`}
+                unoptimized={true}
               />
             </div>
             <span className={`capitalize font-medium tracking-tight ${
