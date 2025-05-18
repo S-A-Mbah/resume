@@ -18,6 +18,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
   const [isFlipped, setIsFlipped] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [copySuccess, setCopySuccess] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   
   const navigationItems = [
     { name: "Explore Skills", section: 1 },
@@ -28,6 +29,22 @@ const Hero = ({ scrollTo }: HeroProps) => {
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDownloading, setIsDownloading] = useState(false)
+
+  // Add a resize listener to detect mobile screens
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 700);
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Handle resume download - Generate a proper ATS-friendly resume
   const handleDownloadResume = async () => {
@@ -622,12 +639,18 @@ const Hero = ({ scrollTo }: HeroProps) => {
     window.location.href = `mailto:${userProfile.email}`
   }
 
-  // Get current visible items (3 at a time)
+  // Get current visible items (3 at a time on desktop, 1 on mobile)
   const getVisibleItems = () => {
     const items = []
-    for (let i = 0; i < 3; i++) {
-      const index = (currentIndex + i) % navigationItems.length
-      items.push(navigationItems[index])
+    if (isMobile) {
+      // For mobile, only return the current item
+      items.push(navigationItems[currentIndex])
+    } else {
+      // For desktop, keep the existing behavior (3 items)
+      for (let i = 0; i < 3; i++) {
+        const index = (currentIndex + i) % navigationItems.length
+        items.push(navigationItems[index])
+      }
     }
     return items
   }
@@ -948,7 +971,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
         
         <motion.div
           variants={item}
-          className="flex justify-center items-center space-x-3 max-w-2xl mx-auto"
+          className="flex justify-center items-center space-x-3 max-w-2xl mx-auto px-4"
         >
           {/* Previous Button */}
           <motion.button
@@ -977,8 +1000,8 @@ const Hero = ({ scrollTo }: HeroProps) => {
             </svg>
           </motion.button>
 
-          {/* Carousel Items */}
-          <div className="relative flex items-center justify-center min-w-[600px]">
+          {/* Carousel Items - Responsive container */}
+          <div className={`relative flex items-center justify-center ${isMobile ? 'mx-1 w-auto' : 'min-w-[600px]'}`}>
             <AnimatePresence mode="sync">
               {getVisibleItems().map((navItem, index) => (
                 <motion.button
@@ -991,7 +1014,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
                     ease: "easeInOut"
                   }}
                   onClick={() => scrollTo(navItem.section)}
-                  className={`absolute inline-flex items-center px-6 py-2 text-base font-medium rounded-full 
+                  className={`${isMobile ? 'relative' : 'absolute'} inline-flex items-center px-6 py-2 text-base font-medium rounded-full 
                     border transition-colors duration-300 ${
                       theme === 'dark'
                         ? 'text-[#64ffda] border-[#64ffda] hover:bg-[#64ffda]/10'
@@ -999,10 +1022,14 @@ const Hero = ({ scrollTo }: HeroProps) => {
                     }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  style={{
-                    left: `${index * 33.33}%`,
-                    transform: `translateX(-50%)`
-                  }}
+                  style={
+                    isMobile 
+                      ? {} // No absolute positioning on mobile
+                      : {  // Keep the existing absolute positioning for desktop
+                          left: `${index * 33.33}%`,
+                          transform: `translateX(-50%)`
+                        }
+                  }
                 >
                   <span className="relative whitespace-nowrap">{navItem.name}</span>
                 </motion.button>
