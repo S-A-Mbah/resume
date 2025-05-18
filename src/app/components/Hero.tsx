@@ -500,7 +500,8 @@ const Hero = ({ scrollTo }: HeroProps) => {
             // Try to get the first non-empty href
             for (const el of linkElements) {
               const href = el.getAttribute('href');
-              if (href && href !== '#' && href !== '') {
+              // Skip GitHub links and use live project links instead
+              if (href && href !== '#' && href !== '' && !href.includes('github.com')) {
                 link = href;
                 break;
               }
