@@ -44,7 +44,7 @@ export default function Projects() {
       image: "/weather.png",
       imageAttribution: "Icon by iconixar",
       technologies: ["Next.js", "React", "TailwindCSS", "OpenWeather API"],
-      githubLink: "#",
+      githubLink: "https://github.com/S-A-Mbah/resume",
       liveLink: "/projects/weather",
       isInternal: true
     },
@@ -53,7 +53,7 @@ export default function Projects() {
       description: "Interactive iPhone-inspired calculator with basic arithmetic operations and calculation history.",
       image: "/calculator-preview.jpg",
       technologies: ["React", "Next.js", "CSS", "TypeScript"],
-      githubLink: "#",
+      githubLink: "https://github.com/S-A-Mbah/Calculator-app",
       liveLink: "/projects/calculator",
       isInternal: true
     },
