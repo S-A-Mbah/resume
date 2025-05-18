@@ -1,0 +1,41 @@
+'use client';
+
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+
+const Navbar = () => {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <nav className="border-b border-white/10 dark:bg-slate-900 bg-white">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex-shrink-0">
+            <h1 className="text-xl font-semibold dark:text-white text-slate-900">
+              Weather Dashboard
+            </h1>
+          </div>
+          <button
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            className="p-2 rounded-lg dark:bg-white/10 bg-slate-100 
+                     dark:text-white text-slate-900 
+                     dark:hover:bg-white/20 hover:bg-slate-200
+                     transition-colors duration-200"
+            aria-label="Toggle theme"
+          >
+            {resolvedTheme === 'dark' ? '☀️' : '🌙'}
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar; 

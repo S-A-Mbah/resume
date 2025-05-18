@@ -1,0 +1,405 @@
+/* Global styles */
+.calculator {
+  max-width: 300px;
+  min-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Light mode (default) */
+.light-mode {
+  background-color: #ffffff;
+}
+
+/* Dark mode */
+.dark-mode {
+  background-color: #112240;
+}
+
+/* Toggle buttons container */
+.toggle-buttons {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 15px;
+  z-index: 10;
+}
+
+.theme-toggle {
+  color: #f5923e;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(30deg);
+}
+
+/* Display styles */
+.display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px;
+  padding-bottom: 30px;
+  border: 2px solid;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-bottom: 0;
+  height: 80px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Light display */
+.light-display {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+/* Dark display */
+.dark-display {
+  background-color: #0a192f;
+  border-color: #64ffda;
+}
+
+.expression {
+  position: absolute;
+  font-size: 16px;
+  top: 10px;
+  right: 10px;
+  max-width: 220px;
+  white-space: nowrap;
+  height: 20px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s ease;
+}
+
+.dark-text {
+  color: #ccd6f6;
+}
+
+.light-text {
+  color: #666;
+}
+
+.display {
+  position: relative;
+  top: 35%;
+  font-size: 28px;
+  text-align: right;
+  font-weight: 500;
+  width: 100%;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+/* Buttons styles */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Light buttons container */
+.light-buttons {
+  background-color: #f9f9f9;
+}
+
+/* Dark buttons container */
+.dark-buttons {
+  background-color: #172a45;
+}
+
+button {
+  font-size: 18px;
+  padding: 15px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Light mode number buttons */
+.light-number {
+  background-color: #e6e6e6;
+  color: #000;
+}
+
+.light-number:hover {
+  background-color: #d9d9d9;
+}
+
+/* Dark mode number buttons */
+.dark-number {
+  background-color: #233554;
+  color: #ccd6f6;
+}
+
+.dark-number:hover {
+  background-color: #2d4366;
+}
+
+/* Style for disabled number buttons */
+.disabled-number {
+  background-color: #f0f0f0 !important;
+  color: #ccc !important;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Style for disabled operator buttons */
+.disabled-operator {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Style for disabled equals button */
+.disabled-equals {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Styling for operation buttons */
+/* Light mode operation buttons */
+.light-operation {
+  background-color: #f5923e;
+  color: #fff;
+}
+
+.light-operation:hover {
+  background-color: #f47e20;
+}
+
+/* Dark mode operation buttons */
+.dark-operation {
+  background-color: #64ffda;
+  color: #0a192f;
+}
+
+.dark-operation:hover {
+  background-color: #5ae9c8;
+}
+
+/* Styling for equals button */
+/* Light mode equals button */
+.light-equals {
+  background-color: #4ca1e3;
+  color: #fff;
+}
+
+.light-equals:hover {
+  background-color: #3b8fd0;
+}
+
+/* Dark mode equals button */
+.dark-equals {
+  background-color: #5ccfee;
+  color: #0a192f;
+}
+
+.dark-equals:hover {
+  background-color: #4bbfde;
+}
+
+/* Styling for cancel button */
+/* Light mode cancel button */
+.light-cancel {
+  background-color: #e55451;
+  color: #fff;
+}
+
+.light-cancel:hover {
+  background-color: #d43f3c;
+}
+
+/* Dark mode cancel button */
+.dark-cancel {
+  background-color: #ff6b6b;
+  color: #0a192f;
+}
+
+.dark-cancel:hover {
+  background-color: #f25b5b;
+}
+
+/* History view styles */
+.history-list {
+  list-style-type: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: left;
+  margin: 0;
+}
+
+.history {
+  padding: 10px;
+  border: 2px solid;
+  border-radius: 10px;
+  margin-bottom: 0;
+  min-height: 370px;
+  display: flex;
+  font-size: 18px;
+  overflow-x: hidden;
+  text-align: justify;
+  min-width: 300px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  position: relative;
+  padding-top: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Light history */
+.light-history {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+/* Dark history */
+.dark-history {
+  background-color: #0a192f;
+  border-color: #64ffda;
+}
+
+/* Style for the history and theme toggle icons */
+.history-icon, .calculator-toggle {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  transition: color 0.3s ease;
+}
+
+/* Light mode icons */
+.light-icon {
+  color: #f5923e;
+}
+
+.light-icon:hover {
+  color: #f47e20;
+}
+
+/* Dark mode icons */
+.dark-icon {
+  color: #64ffda;
+}
+
+.dark-icon:hover {
+  color: #5ae9c8;
+}
+
+/* Style for the history list container (with scroll) */
+.history-list-container {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 5px;
+  max-height: 320px;
+}
+
+.history-list li {
+  padding: 8px 5px;
+  border-bottom: 1px solid;
+  word-break: break-all;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+/* Light mode history items */
+.light-history-item {
+  border-color: #ddd;
+  color: #666;
+}
+
+.light-history-item:hover {
+  background-color: rgba(76, 161, 227, 0.1);
+  transform: translateX(2px);
+  box-shadow: -2px 0 0 #4ca1e3;
+  padding-left: 10px;
+}
+
+/* Dark mode history items */
+.dark-history-item {
+  border-color: #233554;
+  color: #ccd6f6;
+}
+
+.dark-history-item:hover {
+  background-color: rgba(100, 255, 218, 0.1);
+  transform: translateX(2px);
+  box-shadow: -2px 0 0 #64ffda;
+  padding-left: 10px;
+}
+
+.history-list li:active {
+  opacity: 0.8;
+}
+
+.history-list li::after {
+  content: "↩";
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* Light mode return arrow */
+.light-history-item::after {
+  color: #4ca1e3;
+}
+
+/* Dark mode return arrow */
+.dark-history-item::after {
+  color: #64ffda;
+}
+
+.history-list li:hover::after {
+  opacity: 1;
+}
+
+.history-item {
+  display: block;
+  padding: 5px;
+}
+
+.icon-and-display {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 20px;
+  position: relative;
+}
+
+.icon-and-display .display {
+  padding-right: 10px;
+} 
