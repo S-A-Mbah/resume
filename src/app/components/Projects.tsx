@@ -44,7 +44,7 @@ export default function Projects() {
       image: "/weather.png",
       imageAttribution: "Icon by iconixar",
       technologies: ["Next.js", "React", "TailwindCSS", "OpenWeather API"],
-      githubLink: "https://github.com/S-A-Mbah/resume",
+      githubLink: "https://github.com/S-A-Mbah/resume/tree/main/src/app/projects/weather",
       liveLink: "/projects/weather",
       isInternal: true
     },
