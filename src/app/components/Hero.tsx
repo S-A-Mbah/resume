@@ -705,8 +705,9 @@ const Hero = ({ scrollTo }: HeroProps) => {
       
       {/* Download Resume Button */}
       <motion.button
-        className={`absolute top-6 right-6 z-20 px-4 py-2 rounded-full flex items-center 
-          shadow-md transition-colors duration-300 ${
+        className={`absolute z-20 transition-colors duration-300
+          ${isMobile ? 'top-2 right-2 px-2 py-1 text-xs' : 'top-6 right-6 px-4 py-2'} 
+          rounded-full flex items-center shadow-md ${
           theme === 'dark'
             ? 'bg-[#64ffda] text-[#0a192f] hover:bg-[#4fd1b2]'
             : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -730,7 +731,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
           {isDownloading ? (
             /* Loading Spinner with more reliable animation */
             <svg 
-              className="animate-spin h-5 w-5 mr-2 text-current" 
+              className={`animate-spin ${isMobile ? 'h-3 w-3 mr-1' : 'h-5 w-5 mr-2'} text-current`}
               xmlns="http://www.w3.org/2000/svg" 
               fill="none" 
               viewBox="0 0 24 24"
@@ -754,7 +755,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
             /* Download Icon */
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 mr-2" 
+              className={`${isMobile ? 'h-3 w-3 mr-1' : 'h-5 w-5 mr-2'}`}
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
@@ -768,7 +769,9 @@ const Hero = ({ scrollTo }: HeroProps) => {
               />
             </svg>
           )}
-          <span>{isDownloading ? 'Generating...' : 'Download Resume'}</span>
+          <span className={`${isMobile ? 'text-xs' : 'text-base'}`}>
+            {isDownloading ? (isMobile ? 'Loading...' : 'Generating...') : 'Download Resume' }
+          </span>
         </div>
       </motion.button>
       
