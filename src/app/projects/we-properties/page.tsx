@@ -2,6 +2,7 @@
 
 import { Comfortaa } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTheme } from "../../context/ThemeContext";
@@ -217,13 +218,18 @@ const PropertyCard = ({ property, onClick }: { property: Property, onClick: () =
       }`}
     >
       <div className="relative h-64 overflow-hidden">
-        <motion.img
+        <motion.div
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6 }}
-          src={property.imageUrl}
-          alt={property.title}
-          className="w-full h-full object-cover"
-        />
+          className="w-full h-full relative"
+        >
+          <Image
+            src={property.imageUrl}
+            alt={property.title}
+            fill
+            className="object-cover"
+          />
+        </motion.div>
         <button className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/40 transition-colors">
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -297,7 +303,7 @@ const DetailView = ({ property, onClose }: { property: Property, onClose: () => 
       className={`fixed inset-0 z-[60] overflow-y-auto ${theme === "dark" ? "bg-[#0a192f]" : "bg-white"}`}
     >
       <div className="relative h-96">
-        <img src={property.imageUrl} alt={property.title} className="w-full h-full object-cover" />
+        <Image src={property.imageUrl} alt={property.title} fill className="object-cover" />
         <button 
           onClick={onClose}
           className="absolute top-6 left-6 p-3 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition-all"
@@ -384,7 +390,7 @@ export default function WePropertiesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
-  const [savedHomes, setSavedHomes] = useState<Property[]>([FEATURED_PROPERTIES[0], FEATURED_PROPERTIES[2]]);
+  const [savedHomes] = useState<Property[]>([FEATURED_PROPERTIES[0], FEATURED_PROPERTIES[2]]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<{ price: number, types: string[] }>({ price: 5000000, types: [] });
   const [mounted, setMounted] = useState(false);
@@ -580,7 +586,7 @@ export default function WePropertiesPage() {
             >
               <div className="text-center mb-8">
                 <div className="relative w-24 h-24 mx-auto mb-4">
-                  <img src="/profile-pic.jpeg" alt="Profile" className="w-full h-full rounded-full object-cover border-4 border-[#D4AF37]" />
+                  <Image src="/profile-pic.jpeg" alt="Profile" fill className="rounded-full object-cover border-4 border-[#D4AF37]" />
                   <div className="absolute bottom-0 right-0 w-8 h-8 bg-black rounded-full flex items-center justify-center text-white border-4 border-white dark:border-[#112240]">
                     ✎
                   </div>

@@ -1004,7 +1004,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
             isMobile ? 'w-[180px]' : 'min-w-[600px]'
           }`}>
             <AnimatePresence mode="sync">
-              {getVisibleItems().map((navItem, index) => (
+              {getVisibleItems().map((navItem) => (
                 <motion.button
                   key={`${navItem.name}-${currentIndex}`}
                   initial={{ 

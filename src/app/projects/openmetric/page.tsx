@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import { useEffect, useState, useRef } from "react";
 import PipelineFlow from "./components/PipelineFlow";

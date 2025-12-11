@@ -172,7 +172,25 @@ const CoverArt = () => (
 
 // --- Data Structure ---
 
-const bookContent: any[] = [
+interface BookPageContent {
+    en: string;
+    fr: string;
+    phonetic: string;
+    Illustration: React.FC;
+}
+
+interface BookPage {
+    type: 'cover' | 'spread';
+    title?: string;
+    subtitle?: string;
+    Illustration?: React.FC;
+    theme: string;
+    id?: string;
+    left?: BookPageContent;
+    right?: BookPageContent;
+}
+
+const bookContent: BookPage[] = [
     {
         type: 'cover',
         title: "Bonjour, mes amis!",
@@ -382,7 +400,7 @@ const InteractiveText = ({ text, lang = 'fr-FR' }: { text: string, lang?: string
     );
 };
 
-const PageContent = ({ content, side }: { content: any, side: string }) => {
+const PageContent = ({ content, side }: { content: BookPageContent, side: string }) => {
     const Illustration = content.Illustration;
     return (
         <div className={`flex-1 flex flex-col items-center justify-center p-6 sm:p-8 h-full relative ${side === 'left' ? 'border-b sm:border-b-0 sm:border-r border-gray-200' : ''}`}>
@@ -409,8 +427,8 @@ const PageContent = ({ content, side }: { content: any, side: string }) => {
     );
 };
 
-const CoverPage = ({ data, onStart }: { data: any, onStart: () => void }) => {
-    const Illustration = data.Illustration;
+const CoverPage = ({ data, onStart }: { data: BookPage, onStart: () => void }) => {
+    const Illustration = data.Illustration || (() => null);
     return (
         <div className={`w-full h-full flex flex-col items-center justify-center p-8 text-center ${data.theme}`}>
             <div className="w-64 h-64 mb-8 animate-bounce-slow">
@@ -432,7 +450,6 @@ const CoverPage = ({ data, onStart }: { data: any, onStart: () => void }) => {
 
 export default function BonjourBook() {
     const [pageIndex, setPageIndex] = useState(0);
-    const [direction, setDirection] = useState(0); // -1 prev, 1 next
 
     const currentPage = bookContent[pageIndex];
     const isCover = currentPage.type === 'cover';
@@ -440,32 +457,33 @@ export default function BonjourBook() {
 
     const nextPage = () => {
         if (pageIndex < bookContent.length - 1) {
-            setDirection(1);
             setPageIndex(p => p + 1);
         }
     };
 
     const prevPage = () => {
         if (pageIndex > 0) {
-            setDirection(-1);
             setPageIndex(p => p - 1);
         }
     };
 
     const reset = () => {
         setPageIndex(0);
-        setDirection(-1);
     };
 
     // Keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'ArrowRight') nextPage();
-            if (e.key === 'ArrowLeft') prevPage();
+            if (e.key === 'ArrowRight') {
+                setPageIndex(current => Math.min(current + 1, bookContent.length - 1));
+            }
+            if (e.key === 'ArrowLeft') {
+                setPageIndex(current => Math.max(current - 1, 0));
+            }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [pageIndex]);
+    }, []);
 
     return (
         <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 sm:p-8 font-sans relative">
@@ -490,12 +508,12 @@ export default function BonjourBook() {
                         <>
                             {/* Left Page Area */}
                             <div className={`flex-1 h-1/2 sm:h-full relative overflow-hidden ${currentPage.theme} transition-colors duration-500`}>
-                                <PageContent content={currentPage.left} side="left" />
+                                {currentPage.left && <PageContent content={currentPage.left} side="left" />}
                             </div>
 
                             {/* Right Page Area */}
                             <div className={`flex-1 h-1/2 sm:h-full relative overflow-hidden ${currentPage.theme} transition-colors duration-500 border-l border-black/5`}>
-                                <PageContent content={currentPage.right} side="right" />
+                                {currentPage.right && <PageContent content={currentPage.right} side="right" />}
                             </div>
                         </>
                     )}
