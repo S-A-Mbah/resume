@@ -16,11 +16,11 @@ export async function GET(req: NextRequest) {
     // Get API key from server environment variables
     const apiKey = process.env.OPENWEATHER_API_KEY;
     
+    // Fallback to mock data
     if (!apiKey) {
-      return NextResponse.json(
-        { error: 'API key not configured' },
-        { status: 500 }
-      );
+      console.warn('API key not configured, using mock data');
+      const { MOCK_REVERSE_GEOCODE } = await import('../weather/mockData');
+      return NextResponse.json({ ...MOCK_REVERSE_GEOCODE, lat: Number(lat), lon: Number(lon) });
     }
 
     // Fetch reverse geocoding data

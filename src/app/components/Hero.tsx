@@ -177,7 +177,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
       addSectionHeading('Professional Summary');
       
       // Add the professional summary with proper wrapping
-      const summary = "Data Analyst & Developer with expertise in Python, SQL, JavaScript, and data engineering. Experienced in CRM development, API integration, and cloud computing solutions that increased operational efficiency by 35%. Skilled in advanced data migration, real-time analytics, and technical leadership that enhanced system performance and data accuracy by 98%. Demonstrated success in translating complex data into actionable business intelligence through Power BI, automated reporting, and process optimization.";
+      const summary = "Senior Data Engineer with 6+ years of expertise in Big Data Architecture and Full-Stack Development. Proven track record in designing scalable ETL/ELT pipelines using Apache Spark and Airflow, orchestrating containerized workloads with Kubernetes, and provisioning AWS Cloud Infrastructure (Redshift, EC2) via Terraform. Expert in Python, SQL, and React-based visualization to drive operational efficiency and business intelligence.";
       
       pdf.setFontSize(fontSizes.normal);
       pdf.setFont('helvetica', 'normal');
@@ -253,87 +253,6 @@ const Hero = ({ scrollTo }: HeroProps) => {
       }
       
       yPos += 10;
-      
-      // EDUCATION SECTION - Moved up to come right after skills
-      addSectionHeading('Education');
-      
-      // Get education data
-      interface Education {
-        degree: string;
-        minor: string;
-        school: string;
-        year: string;
-      }
-      
-      const educations: Education[] = [];
-      const educationItems = document.querySelectorAll('#education .relative.space-y-2, #education .relative.group');
-      const processedEducations = new Set<string>();
-      
-      if (educationItems && educationItems.length > 0) {
-        for (const item of educationItems) {
-          const degree = item.querySelector('h3')?.textContent?.trim() || '';
-          const school = item.querySelector('p:nth-of-type(2)')?.textContent?.trim() || '';
-          
-          // Create a unique identifier
-          const educationKey = `${degree}-${school}`;
-          
-          // Skip if already processed
-          if (processedEducations.has(educationKey)) continue;
-          processedEducations.add(educationKey);
-          
-          const minor = item.querySelector('p:nth-of-type(1)')?.textContent?.trim() || '';
-          const year = item.querySelector('p:nth-of-type(3)')?.textContent?.trim() || '';
-          
-          if (degree && school) {
-            educations.push({ degree, minor, school, year });
-          }
-        }
-      }
-      
-      // Use placeholder if no education found
-      if (educations.length === 0) {
-        educations.push({
-          degree: 'Bachelor of Science in Computer Science',
-          minor: '',
-          school: 'University Name',
-          year: '2014 - 2018'
-        });
-      }
-      
-      // Add education to PDF
-      for (const edu of educations) {
-        // Check if we need a new page
-        checkAndAddPage(fontSizes.subsection * 4);
-        
-        // Degree
-        pdf.setFontSize(fontSizes.subsection);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setTextColor(colors.primary);
-        pdf.text(edu.degree, margin, yPos);
-        yPos += fontSizes.subsection + 5;
-        
-        // Minor if available
-        if (edu.minor) {
-          pdf.setFontSize(fontSizes.normal);
-          pdf.setFont('helvetica', 'normal');
-          pdf.setTextColor(colors.secondary);
-          pdf.text(edu.minor, margin, yPos);
-          yPos += fontSizes.normal + 5;
-        }
-        
-        // School
-        pdf.setFontSize(fontSizes.normal);
-        pdf.setFont('helvetica', 'normal');
-        pdf.setTextColor(colors.secondary);
-        pdf.text(edu.school, margin, yPos);
-        yPos += fontSizes.normal + 5;
-        
-        // Year
-        pdf.setFont('helvetica', 'italic');
-        pdf.setTextColor(colors.accent);
-        pdf.text(edu.year, margin, yPos);
-        yPos += fontSizes.normal + 15;
-      }
       
       // EXPERIENCE SECTION
       addSectionHeading('Professional Experience');
@@ -454,6 +373,79 @@ const Hero = ({ scrollTo }: HeroProps) => {
         
         yPos += 15;
       }
+      // EDUCATION SECTION 
+      addSectionHeading('Education');
+      
+      // Get education data
+      interface Education {
+        degree: string;
+        minor: string;
+        school: string;
+        year: string;
+      }
+      
+      const educations: Education[] = [];
+      const educationItems = document.querySelectorAll('#education .relative.space-y-2, #education .relative.group');
+      const processedEducations = new Set<string>();
+      
+      if (educationItems && educationItems.length > 0) {
+        for (const item of educationItems) {
+          const degree = item.querySelector('h3')?.textContent?.trim() || '';
+          const school = item.querySelector('p:nth-of-type(2)')?.textContent?.trim() || '';
+          
+          // Create a unique identifier
+          const educationKey = `${degree}-${school}`;
+          
+          // Skip if already processed
+          if (processedEducations.has(educationKey)) continue;
+          processedEducations.add(educationKey);
+          
+          const minor = item.querySelector('p:nth-of-type(1)')?.textContent?.trim() || '';
+          const year = item.querySelector('p:nth-of-type(3)')?.textContent?.trim() || '';
+          
+          if (degree && school) {
+            educations.push({ degree, minor, school, year });
+          }
+        }
+      }
+      
+      // Use placeholder if no education found
+      if (educations.length === 0) {
+        educations.push({
+          degree: 'B.Sc. Computer Science',
+          minor: 'Minor in Statistics',
+          school: 'University of Manitoba',
+          year: '2014 - 2018'
+        });
+      }
+      
+      // Add education to PDF
+      for (const edu of educations) {
+        // Check if we need a new page
+        checkAndAddPage(fontSizes.normal * 2);
+        
+        // Construct the single line string
+        // Format: Degree, Minor | School | Year
+        let educationLine = edu.degree;
+        if (edu.minor) {
+          educationLine += `, ${edu.minor}`;
+        }
+        educationLine += ` | ${edu.school}`;
+        if (edu.year) {
+          educationLine += ` | ${edu.year}`;
+        }
+        
+        pdf.setFontSize(fontSizes.normal);
+        pdf.setTextColor(colors.primary);
+        
+        // Use addWrappedText to handle potential wrapping on small screens/long text
+        // Passing 'bold' to make it stand out as a header-like item, or 'normal' based on preference.
+        // Given it's a list item, 'normal' or 'bold' works. Let's stick to 'normal' but maybe slightly larger or just regular?
+        // The user didn't specify weight, but usually main info is bold. However, the request text "B.Sc. ... | ... | ..." looks like a standard line.
+        // I will use 'bold' for the text to make it readable as a key item.
+        yPos = addWrappedText(educationLine, margin, yPos, contentWidth, fontSizes.normal, 'bold');
+        yPos += 10;
+      }
       
       // PROJECTS SECTION 
       addSectionHeading('Projects');
@@ -519,7 +511,9 @@ const Hero = ({ scrollTo }: HeroProps) => {
               .replace(/-application$/, ''); // Remove "-application" suffix if present
             
             // Get the base name without any "-app" or "-application" suffix
-            const baseName = slug.replace(/(weather|calculator|portfolio).*$/, '$1');
+            const baseName = slug
+              .replace(/(weather|calculator|portfolio).*$/, '$1')
+              .replace(/openmetric.*$/, 'openmetric');
             
             link = `/projects/${baseName}`;
           }
@@ -968,7 +962,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
             }`}
           >
             <p className="text-lg leading-relaxed">
-              Data Analyst & Developer with expertise in Python, SQL, JavaScript, and data engineering. Experienced in CRM development, API integration, and cloud computing solutions that increased operational efficiency by 35%. Skilled in advanced data migration, real-time analytics, and technical leadership that enhanced system performance and data accuracy by 98%. Demonstrated success in translating complex data into actionable business intelligence through Power BI, automated reporting, and process optimization.
+              Senior Data Engineer with 6+ years of expertise in Big Data Architecture and Full-Stack Development. Proven track record in designing scalable ETL/ELT pipelines using Apache Spark and Airflow, orchestrating containerized workloads with Kubernetes, and provisioning AWS Cloud Infrastructure (Redshift, EC2) via Terraform. Expert in Python, SQL, and React-based visualization to drive operational efficiency and business intelligence.
             </p>
           </motion.div>
         </motion.div>
@@ -1012,52 +1006,34 @@ const Hero = ({ scrollTo }: HeroProps) => {
             <AnimatePresence mode="sync">
               {getVisibleItems().map((navItem, index) => (
                 <motion.button
-                  key={`${navItem.name}-${currentIndex}`} // Use currentIndex in key to improve transition
+                  key={`${navItem.name}-${currentIndex}`}
                   initial={{ 
                     opacity: 0, 
-                    x: isMobile ? 50 : -20 // Different initial position for mobile
+                    x: isMobile ? 50 : 20
                   }}
                   animate={{ 
                     opacity: 1, 
                     x: 0,
-                    position: isMobile ? 'static' : 'absolute',
                   }}
                   exit={{ 
                     opacity: 0, 
-                    x: isMobile ? -50 : 20, // Different exit position for mobile
-                    position: isMobile ? 'absolute' : 'absolute',
+                    x: isMobile ? -50 : -20,
                   }}
                   transition={{ 
                     duration: 0.4,
                     ease: "easeInOut"
                   }}
                   onClick={() => scrollTo(navItem.section)}
-                  className={`${
-                    isMobile ? 'mx-auto' : 'absolute'
-                  } inline-flex items-center px-6 py-2 text-base font-medium rounded-full 
-                    border transition-colors duration-300 ${
+                  className={`relative mx-2 inline-flex items-center px-4 sm:px-6 py-2 text-sm sm:text-base font-medium rounded-full 
+                    border transition-colors duration-300 whitespace-nowrap ${
                       theme === 'dark'
                         ? 'text-[#64ffda] border-[#64ffda] hover:bg-[#64ffda]/10'
                         : 'text-blue-600 border-blue-500 hover:bg-blue-50'
                     }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  style={
-                    isMobile 
-                      ? { 
-                          // Center the button in mobile view
-                          position: 'relative',
-                          left: '50%',
-                          transform: 'translateX(-50%)'
-                        } 
-                      : {  
-                          // Keep the existing absolute positioning for desktop
-                          left: `${index * 33.33}%`,
-                          transform: `translateX(-50%)`
-                        }
-                  }
                 >
-                  <span className="relative whitespace-nowrap">{navItem.name}</span>
+                  {navItem.name}
                 </motion.button>
               ))}
             </AnimatePresence>

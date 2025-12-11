@@ -28,16 +28,55 @@ export default function Projects() {
   const [loadingProject, setLoadingProject] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // Prefetch the weather app route
+  // Prefetch the project routes
   useEffect(() => {
     // Check if router.prefetch exists before calling it
     if (typeof router.prefetch === 'function') {
       router.prefetch('/projects/weather');
       router.prefetch('/projects/calculator');
+      router.prefetch('/projects/openmetric');
+      router.prefetch('/projects/we-properties');
     }
   }, [router])
 
   const projects: Project[] = [
+    {
+      title: "WE Properties App",
+      description: "A luxury real-estate application concept featuring a reactive 'alive' interface, advanced filtering, and a premium golden aesthetic.",
+      image: "/we-properties-preview.png",
+      technologies: ["Next.js", "Framer Motion", "TailwindCSS", "UX Design"],
+      githubLink: "https://github.com/S-A-Mbah/resume", // Pointing to repo containing the code
+      liveLink: "/projects/we-properties",
+      isInternal: true
+    },
+    {
+      title: "OpenMetric ETL Platform",
+      description: "End-to-end data pipeline built with Python and Airflow, featuring automated quality validation and interactive React/D3.js dashboards for cryptocurrency sentiment analysis.",
+      image: "/openmetric-preview.png",
+      technologies: ["Python", "Airflow", "AWS S3", "dbt", "Great Expectations", "Docker"],
+      githubLink: "https://github.com/S-A-Mbah/resume/tree/main/src/app/projects/openmetric",
+      liveLink: "/projects/openmetric",
+      isInternal: true
+    },
+    {
+      title: "Bonjour Book",
+      description: "An interactive bilingual digital book for children featuring custom SVG illustrations, text-to-speech narration, and word highlighting.",
+      image: "/bonjour-book-cover.png", 
+      technologies: ["React", "Typescript", "Web Speech API", "SVG"],
+      githubLink: "https://github.com/S-A-Mbah/resume/tree/main/src/app/projects/bonjour-book",
+      liveLink: "/projects/bonjour-book",
+      isInternal: true
+    },
+    {
+      title: "Bellabeat Case Study",
+      description: "Data analysis of Fitbit fitness trackers to identify trends and inform marketing strategies for a health-focused tech company.",
+      image: "/visualization-activity.png",
+      technologies: ["Python", "Data Analysis", "Pandas", "Matplotlib"],
+      githubLink: "https://www.kaggle.com/code/sambah29/bellabeat-case-study-using-python",
+      isModal: true
+    },
+    // Add more projects as needed
+    /**  
     {
       title: "Weather App",
       description: "Real-time weather forecasting application with location search functionality, displaying current conditions and forecasts.",
@@ -57,15 +96,7 @@ export default function Projects() {
       liveLink: "/projects/calculator",
       isInternal: true
     },
-    {
-      title: "Bellabeat Case Study",
-      description: "Data analysis of Fitbit fitness trackers to identify trends and inform marketing strategies for a health-focused tech company.",
-      image: "/visualization-activity.png",
-      technologies: ["Python", "Data Analysis", "Pandas", "Matplotlib"],
-      githubLink: "https://www.kaggle.com/code/sambah29/bellabeat-case-study-using-python",
-      isModal: true
-    },
-    // Add more projects as needed
+    **/
   ]
 
   const containerVariants = {

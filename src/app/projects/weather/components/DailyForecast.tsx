@@ -50,7 +50,7 @@ const DailyForecast: FC<DailyForecastProps> = ({ forecast }) => {
     return Math.abs(scrollLeft + offsetWidth - scrollWidth) < 10; // Within 10px of the end
   }, []);
 
-  const nextDayForecasts = forecast.list
+  const nextDayForecasts = (forecast?.list || [])
     .slice(0, 8)
     .map(item => {
       const date = new Date(item.dt * 1000);

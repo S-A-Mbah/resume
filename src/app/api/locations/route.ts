@@ -15,11 +15,15 @@ export async function GET(req: NextRequest) {
     // Get API key from server environment variables
     const apiKey = process.env.OPENWEATHER_API_KEY;
     
+    // Fallback to mock data
     if (!apiKey) {
-      return NextResponse.json(
-        { error: 'API key not configured' },
-        { status: 500 }
+      console.warn('API key not configured, using mock data');
+      const { MOCK_LOCATIONS } = await import('../weather/mockData');
+      // Simple filter for mock data
+      const filtered = MOCK_LOCATIONS.filter(l => 
+        l.name.toLowerCase().includes(query.toLowerCase())
       );
+      return NextResponse.json(filtered);
     }
 
     // Fetch location data

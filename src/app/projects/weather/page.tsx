@@ -23,6 +23,7 @@ export default function WeatherApp() {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState<boolean>(false);
   const { coordinates, error: geoError } = useGeolocation();
 
@@ -39,6 +40,7 @@ export default function WeatherApp() {
       }
       
       setIsLoading(true);
+      setError(null);
       const lat = selectedLocation?.lat ?? coordinates?.lat;
       const lon = selectedLocation?.lon ?? coordinates?.lon;
       
@@ -63,6 +65,7 @@ export default function WeatherApp() {
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching weather data:', error);
+        setError('Failed to load weather data. Please try again.');
         setIsLoading(false);
       }
     };
@@ -116,6 +119,7 @@ export default function WeatherApp() {
         <main className="max-w-5xl mx-auto">
           <LocationSearch
             currentLocation={selectedLocation || currentLocation || undefined}
+            locationError={geoError}
             onLocationSelect={setSelectedLocation}
           />
 
@@ -126,7 +130,23 @@ export default function WeatherApp() {
             </div>
           )}
 
-          {isLoading ? (
+
+          {error ? (
+            <div className="flex justify-center items-center h-64 flex-col gap-4">
+              <div className="w-16 h-16 text-red-400">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <p className="text-red-400 font-medium">{error}</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+              >
+                Retry
+              </button>
+            </div>
+          ) : isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="relative">
                 <div className="animate-spin rounded-full h-12 w-12 

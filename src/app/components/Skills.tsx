@@ -9,42 +9,61 @@ export default function Skills() {
 
   const skillCategories = [
     {
-      category: "Programming Languages",
+      category: "Data Engineering & Analytics",
       skills: [
         { name: "Python", icon: "🐍" },
-        { name: "JavaScript", icon: "💻" },
-        { name: "Java", icon: "☕" },
-        { name: "SQL", icon: "🗃️" },
-        { name: "HTML", icon: "🌐" },
-        { name: "CSS", icon: "🎨" },
-      ]
-    },
-    {
-      category: "Frameworks & Libraries",
-      skills: [
-        { name: "React", icon: "⚛️" },
-        { name: "Next.js", icon: "▲" },
-        { name: "Vue.js", icon: "🟩" },
-        { name: "Nuxt.js", icon: "💚" },
         { name: "Pandas", icon: "🐼" },
-      ]
-    },
-    {
-      category: "Development & Integration",
-      skills: [
-        { name: "RESTful APIs", icon: "🔌" },
-        { name: "API Development", icon: "⚡" },
-        { name: "Automation", icon: "⚙️" },
-        { name: "Cloud Computing", icon: "☁️" },
+        { name: "NumPy", icon: "🔢" },
+        { name: "Airflow", icon: "🍃" },
+        { name: "Kafka", icon: "📨" },
+        { name: "PyTorch", icon: "🔥" },
+        { name: "SQL (PostgreSQL)", icon: "🗃️" },
+        { name: "NoSQL (MongoDB)", icon: "🍃" },
+        { name: "ETL/ELT Pipelines", icon: "🔄" },
+        { name: "Data Warehousing", icon: "🏢" },
+        { name: "Data Modeling", icon: "📐" },
+        { name: "Big Data (Spark, Hadoop)", icon: "🐘" },
+        { name: "Power BI", icon: "📊" },
         { name: "Google Tag Manager", icon: "🏷️" },
       ]
     },
     {
-      category: "AI & Analytics",
+      category: "Web Development",
       skills: [
+        { name: "JavaScript", icon: "💻" },
+        { name: "React", icon: "⚛️" },
+        { name: "Next.js", icon: "▲" },
+        { name: "Expo", icon: "📱" },
+        { name: "PHP", icon: "🐘" },
+        { name: "Vue.js", icon: "🟩" },
+        { name: "Nuxt.js", icon: "💚" },
+        { name: "D3.js", icon: "📊" },
+        { name: "HTML5", icon: "🌐" },
+        { name: "CSS3", icon: "🎨" },
+        { name: "RESTful APIs", icon: "🔌" },
+      ]
+    },
+    {
+      category: "Cloud & DevOps",
+      skills: [
+        { name: "AWS (EC2, Redshift, Lambda)", icon: "☁️" },
+        { name: "Docker", icon: "🐳" },
+        { name: "Kubernetes", icon: "☸️" },
+        { name: "IaC (Terraform)", icon: "🏗️" },
+        { name: "CI/CD Pipelines (GitHub Actions)", icon: "🚀" },
+        { name: "Git", icon: "🐙" },
+        { name: "Automation", icon: "⚙️" },
+      ]
+    },
+    {
+      category: "Methodologies",
+      skills: [
+        { name: "Agile", icon: "🏃" },
+        { name: "SDLC", icon: "📋" },
+        { name: "TDD (Test Driven Development)", icon: "🔴" },
+        { name: "Unit Testing (PyTest/Jest)", icon: "🧪" },
+        { name: "Statistical Analysis", icon: "📉" },
         { name: "Prompt Engineering", icon: "🤖" },
-        { name: "Power BI", icon: "📊" },
-        { name: "Data Analysis", icon: "📈" },
       ]
     }
   ]
@@ -54,19 +73,23 @@ export default function Skills() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.05,
-        duration: 0.2
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
+        delayChildren: 0.2
       }
     }
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 10 },
+    hidden: { opacity: 0, y: 20, scale: 0.9 },
     visible: { 
       opacity: 1, 
-      y: 0,
+      y: 0, 
+      scale: 1,
       transition: {
-        duration: 0.2
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        mass: 0.8
       }
     }
   }
@@ -140,4 +163,3 @@ export default function Skills() {
     </div>
   )
 }
-

@@ -9,44 +9,55 @@ export default function Experience() {
   
   const experiences = [
     {
-      title: "Developer & Senior Technical Systems Analyst",
+      title: "Full Stack Developer & Senior Data Engineer",
       company: "RK Publishing",
-      period: "Jun 2021 - Present",
+      period: "Jun 2021 – Present",
       responsibilities: [
         <>
-          <strong>Developed and maintained a custom CRM system</strong>
-          {" that streamlined client data management, increasing operational efficiency by 35% and reducing customer query response time by 20%."}
+          <strong>Custom CRM Engineering</strong>
+          {": Architected a scalable Python CRM, implementing Redis caching to slash query latency by 20% and drive a 35% increase in sales team operational throughput."}
         </>,
         <>
-          <strong>Delivered actionable insights and guidance on software updates and system enhancements</strong>
-          {" as a trusted subject matter expert, leading to a 40% improvement in user adoption rates and a 25% reduction in customer-reported issues."}
+          <strong>Data Migration & Architecture</strong>
+          {": Containerized Apache Spark (PySpark) ETL pipelines using Docker and orchestrated CI/CD workflows via GitHub Actions and Airflow to migrate TB-scale datasets into AWS Redshift, ensuring GDPR compliance and 98% data integrity."}
         </>,
         <>
-          <strong>Spearheaded data migration and cleansing initiatives</strong>
-          {" that resulted in a 98% improvement in data accuracy and a 50% decrease in data retrieval times, enhancing overall system reliability and performance."}
+          <strong>Strategic Technical Leadership</strong>
+          {": Directed technical strategy for system enhancements, serving as the subject matter expert on software architecture; drove a 40% improvement in user adoption and a 25% reduction in reported bugs through proactive root-cause analysis."}
         </>,
         <>
-          <strong>Ensured flawless website performance</strong>
-          {" by performing rigorous quality assurance testing, reducing bugs and issues by 30% and improving site load times by 25%, which directly enhanced user experience and satisfaction."}
+          <strong>Performance Optimization</strong>
+          {": Established a robust CI/CD pipeline using GitHub Actions to trigger automated PyTest and Jest suites, replacing manual QA and reducing production issues by 30% while adhering to GDPR data privacy standards."}
         </>,
         <>
-          <strong>Partnered with clients to resolve technical challenges</strong>
-          {", leading to a 15% improvement in client satisfaction scores and enhancing long-term relationships with key accounts."}
+          <strong>Client Solutions</strong>
+          {": Partnered with key accounts to resolve complex technical challenges, resulting in a 15% increase in client satisfaction scores."}
         </>
       ]
     },
     {
-      title: "Lead Realtime Data Analyst",
+      title: "Lead Real-time Data Analyst",
       company: "24-7 Intouch",
-      period: "Jan 2019 - Apr 2021",
+      period: "Jan 2019 – Apr 2021",
       responsibilities: [
-        "Managed daily operations of the real-time data team, overseeing staffing, scheduling, and performance monitoring, which led to a 20% improvement in team productivity and a 5% reduction in operational downtime.",
-        "Optimized workforce planning by strategically analyzing trends and historical data, resulting in a 30% increase in the ability to meet service level objectives and improved resource allocation.",
-        "Designed and automated daily reporting processes, enhancing data accuracy and reliability, which supported data-driven decision-making and decreased reporting errors by 25%.",
-        "Led comprehensive interview processes and training sessions for new team members, ensuring a 40% faster onboarding time and a 20% increase in team efficiency.",
+        <>
+          <strong>Analytics Operations</strong>
+          {": Directed real-time data analytics operations, leveraging Power BI and SQL to optimize resource allocation, driving a 20% surge in team productivity and 5% reduction in operational downtime."}
+        </>,
+        <>
+          <strong>Process Automation</strong>
+          {": Engineered automated ETL ingestion workflows to deprecate manual reporting, increasing data accuracy by 25% and ensuring 99.9% uptime for C-suite executive dashboards."}
+        </>,
+        <>
+          <strong>Predictive Modeling</strong>
+          {": Optimized workforce planning by strategically analyzing historical data trends, resulting in a 30% increase in Service Level Objective (SLO) attainment."}
+        </>,
+        <>
+          <strong>Team Leadership</strong>
+          {": Led technical training and onboarding initiatives, reducing time-to-productivity for new analysts by 40%."}
+        </>
       ]
     }
-    // Add more experience entries as needed
   ]
 
   const containerVariants = {
@@ -158,4 +169,3 @@ export default function Experience() {
     </div>
   )
 }
-

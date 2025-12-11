@@ -14,10 +14,11 @@ interface Location {
 
 interface LocationSearchProps {
   currentLocation?: Location;
+  locationError?: string | null;
   onLocationSelect: (location: Location) => void;
 }
 
-export default function LocationSearch({ currentLocation, onLocationSelect }: LocationSearchProps) {
+export default function LocationSearch({ currentLocation, locationError, onLocationSelect }: LocationSearchProps) {
   const { theme } = useTheme();
   const [search, setSearch] = useState('');
   const [locations, setLocations] = useState<Location[]>([]);
@@ -84,6 +85,8 @@ export default function LocationSearch({ currentLocation, onLocationSelect }: Lo
               {currentLocation.state && `, ${currentLocation.state}`}
               {currentLocation.country && `, ${currentLocation.country}`}
             </span>
+          ) : locationError ? (
+             <span className="text-red-400 text-sm">Location unavailable</span>
           ) : (
             <span className="italic">Loading location...</span>
           )}

@@ -96,21 +96,23 @@ const WeatherDisplay: FC<WeatherDisplayProps> = ({ weatherData, units, onUnitCha
               <div className={`absolute inset-0 ${
                 theme === 'dark' ? 'bg-white/10' : 'bg-slate-700/10'
               } rounded-full transition-colors duration-200`} />
-              <Image 
-                src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
-                alt={weather[0].description}
-                width={48}
-                height={48}
-                className={`absolute inset-0 ${
-                  theme === 'dark' ? 'bg-white/20' : 'bg-slate-700/10'
-                } rounded-full transition-colors duration-200`}
-                unoptimized={true}
-              />
+              {weather && weather[0] && (
+                <Image 
+                  src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+                  alt={weather[0].description}
+                  width={48}
+                  height={48}
+                  className={`absolute inset-0 ${
+                    theme === 'dark' ? 'bg-white/20' : 'bg-slate-700/10'
+                  } rounded-full transition-colors duration-200`}
+                  unoptimized={true}
+                />
+              )}
             </div>
             <span className={`capitalize font-medium tracking-tight ${
               theme === 'dark' ? 'text-slate-200' : 'text-slate-700'
             }`}>
-              {weather[0].description}
+              {weather && weather[0] ? weather[0].description : 'Unknown'}
             </span>
           </div>
         </div>

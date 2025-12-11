@@ -27,7 +27,7 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
   // Default user profile data
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: 'Somto A. Mbah',
-    title: 'Data Analyst | Data Engineer | Developer',
+    title: 'Senior Data Engineer & Developer',
     email: 'donaldmbah@gmail.com',
     phone: '(204) 995-6190',
     location: 'Canada',

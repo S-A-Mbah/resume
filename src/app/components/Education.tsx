@@ -9,7 +9,7 @@ export default function Education() {
   
   const education = [
     {
-      degree: "Bachelor of Science in Computer Science",
+      degree: "B.Sc. Computer Science",
       minor: "Minor in Statistics",
       school: "University of Manitoba",
       year: "2014 - 2018",
