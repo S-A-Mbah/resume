@@ -800,7 +800,7 @@ const Hero = ({ scrollTo }: HeroProps) => {
               isFlipped ? 'hidden' : 'block'
             }`}>
               <Image
-                src="/profile-pic.jpeg?height=200&width=200"
+                src="/profile-pic.jpeg"
                 alt={userProfile.name}
                 width={200}
                 height={200}
